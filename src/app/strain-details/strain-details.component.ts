@@ -16,13 +16,8 @@ import 'rxjs/add/operator/mergeMap';
 export class StrainDetailsComponent implements OnInit {
 
   private selectedStrain: Strain = null;
-  private chartOptions: any = {
-    animation: {
-      animateRotate: true,
-      animateScale: true
-    }
-
-  }
+  private effectsChartData: number[] = null;
+  private effectsChartLabels: string[] = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +33,13 @@ export class StrainDetailsComponent implements OnInit {
 
     strain.subscribe((strainModel: Strain) => {
       this.selectedStrain = strainModel;
-      console.log(this.selectedStrain);
+
+      this.effectsChartData =
+        Object.keys(this.selectedStrain.effects_flavors.effects)
+          .map(eff => this.selectedStrain.effects_flavors.effects[eff] as number);
+
+      this.effectsChartLabels =
+        Object.keys(this.selectedStrain.effects_flavors.effects)
 
       // To initialize the Materialize tabs NOT before the strain data is ready
       $(() => {
@@ -46,16 +47,6 @@ export class StrainDetailsComponent implements OnInit {
       });
     });
   }
-
-  getStrainEffectValues(): number[] {
-    return Object.keys(this.selectedStrain.effects_flavors.effects)
-      .map(eff => this.selectedStrain.effects_flavors.effects[eff] as number);
-  }
-
-  getStrainEffectKeys(): string[] {
-    return Object.keys(this.selectedStrain.effects_flavors.effects);
-  }
-
 }
 
 // To keep compiler from complaining that '$' is not defined

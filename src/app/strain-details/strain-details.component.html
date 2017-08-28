@@ -18,11 +18,10 @@
     <div id="flav-eff" class="col s12">
       <div style='display: block'>
         <canvas baseChart
-                [data]='getStrainEffectValues()'
-                [labels]='getStrainEffectKeys()'
+                [data]='effectsChartData'
+                [labels]='effectsChartLabels'
                 [legend]='true'
-                [chartType]='"polarArea"'
-                [options]='chartOptions'></canvas>
+                [chartType]='"polarArea"'></canvas>
       </div>
     </div>
 
