@@ -44,14 +44,16 @@ export class StrainDetailsComponent implements OnInit {
           .map(eff => this.selectedStrain.effects_flavors.effects[eff] as number);
 
       this.effectsChartLabels =
-        Object.keys(this.selectedStrain.effects_flavors.effects);
+        Object.keys(this.selectedStrain.effects_flavors.effects)
+          .map(eff => eff.charAt(0).toUpperCase() + eff.slice(1).replace(/_/g, ' '));
 
       this.flavorsChartData =
         Object.keys(this.selectedStrain.effects_flavors.flavors)
           .map(flavor => this.selectedStrain.effects_flavors.flavors[flavor]);
 
       this.flavorsChartLabels =
-        Object.keys(this.selectedStrain.effects_flavors.flavors);
+        Object.keys(this.selectedStrain.effects_flavors.flavors)
+          .map(flavor => flavor.charAt(0).toUpperCase() + flavor.slice(1).replace(/_/g, ' '));
 
       // To initialize the Materialize tabs NOT before the strain data is ready
       $(() => {
