@@ -16,13 +16,23 @@
     </div>
 
     <div id="flav-eff" class="col s12">
-      <div style='display: block'>
-        <canvas baseChart
-                [data]='effectsChartData'
-                [labels]='effectsChartLabels'
-                [legend]='true'
-                [chartType]='"polarArea"'></canvas>
+      <div class="row">
+        <div class="col m6" style='display: block'>
+          <canvas baseChart
+                  [data]='effectsChartData'
+                  [labels]='effectsChartLabels'
+                  [legend]='true'
+                  [chartType]='"polarArea"'></canvas>
+        </div>
+        <div class="col m6">
+          <canvas baseChart
+                  [data]='flavorsChartData'
+                  [labels]='flavorsChartLabels'
+                  [legend]='true'
+                  [chartType]='"polarArea"'></canvas>
+        </div>
       </div>
+
     </div>
 
     <div id="company" class="col s12">

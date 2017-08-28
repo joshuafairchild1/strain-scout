@@ -25,7 +25,7 @@ export class CannabisReportsService {
   getRawStrainInfo(ucpc: string): Observable<any> {
     const url = `${this.strainDetailsEndpoint}${ucpc}`;
     return this.http.get(url)
-      .map(res => res.json().data)
+      .map(res => res.json().data);
   }
 
   getStrainDetails(ucpc: string): Observable<Strain> {
@@ -34,18 +34,18 @@ export class CannabisReportsService {
     const strainDetailResponse: Observable<any> = this.getRawStrainInfo(ucpc);
 
     const strain: Observable<Strain> =
-      Observable.forkJoin([strainEffects, strainDetailResponse])
-        .map(res => {
+      Observable.forkJoin([strainDetailResponse, strainEffects])
+        .map((res: any) => {
           return new Strain(
-            res[1].name,
-            res[1].ucpc,
-            res[1].image,
-            res[1].genetics,
+            res[0].name,
+            res[0].ucpc,
+            res[0].image,
+            res[0].genetics,
             {
-              countries: Object.keys(res[1].lineage),
-              countryCodes: Object.keys(res[1].lineage).map(key => res[1].lineage[key])
+              countries: Object.keys(res[0].lineage),
+              countryCodes: Object.keys(res[0].lineage).map(key => res[0].lineage[key])
             },
-            res[0]
+            res[1]
           );
         });
 
@@ -53,10 +53,10 @@ export class CannabisReportsService {
   }
 
   getStrainEffects(ucpc: string): Observable<any> {
-    const url = `https://www.cannabisreports.com/api/v1.0/strains/${ucpc}/effectsFlavors`
+    const url = `https://www.cannabisreports.com/api/v1.0/strains/${ucpc}/effectsFlavors`;
     return this.http.get(url)
-      .map(res => res.json().data)
-      .map(effs => {
+      .map((res: any) => res.json().data)
+      .map((effs: any): any => {
         return {
           effects: {
             euphoria: effs.euphoria,
@@ -75,7 +75,7 @@ export class CannabisReportsService {
             pine: effs.pine,
             anxiety: effs.anxiety
           }
-        }
+        };
       });
   }
 }
