@@ -23,6 +23,7 @@ export class StrainDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     const strain: Observable<any> =
       this.route.params
         .map(params => params['ucpc'])
@@ -31,7 +32,14 @@ export class StrainDetailsComponent implements OnInit {
     strain.subscribe((strainModel: Strain) => {
       this.selectedStrain = strainModel;
       console.log(this.selectedStrain);
+
+      // To initialize the Materialize tabs NOT before the strain data is ready
+      $(() => {
+        $('ul.tabs').tabs();
+      });
     });
   }
 
 }
+
+declare var $:any

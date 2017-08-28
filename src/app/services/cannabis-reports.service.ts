@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { StrainResult } from './../models/strain-result.model';
 import { Strain } from './../models/strain.model';
-
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CannabisReportsService {
@@ -31,18 +29,53 @@ export class CannabisReportsService {
   }
 
   getStrainDetails(ucpc: string): Observable<Strain> {
-    return this.getRawStrainInfo(ucpc)
-      .map(res => {
-        return new Strain(
-          res.name,
-          res.ucpc,
-          res.image,
-          res.genetics,
-          {
-            countries: Object.keys(res.lineage),
-            countryCodes: Object.keys(res.lineage).map(key => res.lineage[key])
+    const strainEffects: Observable<any> = this.getStrainEffects(ucpc);
+
+    const strainDetailResponse: Observable<any> = this.getRawStrainInfo(ucpc);
+
+    const strain: Observable<Strain> =
+      Observable.forkJoin([strainEffects, strainDetailResponse])
+        .map(res => {
+          return new Strain(
+            res[1].name,
+            res[1].ucpc,
+            res[1].image,
+            res[1].genetics,
+            {
+              countries: Object.keys(res[1].lineage),
+              countryCodes: Object.keys(res[1].lineage).map(key => res[1].lineage[key])
+            },
+            res[0]
+          );
+        });
+
+    return strain;
+  }
+
+  getStrainEffects(ucpc: string): Observable<any> {
+    const url = `https://www.cannabisreports.com/api/v1.0/strains/${ucpc}/effectsFlavors`
+    return this.http.get(url)
+      .map(res => res.json().data)
+      .map(effs => {
+        return {
+          effects: {
+            euphoria: effs.euphoria,
+            creativity: effs.creativity,
+            calming: effs.calming,
+            numbness: effs.numbness,
+            appetite_gain: effs.appetite_gain,
+            dry_mouth: effs.dry_mouth,
+          },
+          flavors: {
+            fruity: effs.fruity,
+            spicy: effs.spicy,
+            earthy: effs.earthy,
+            sour: effs.sour,
+            sweet: effs.sweet,
+            pine: effs.pine,
+            anxiety: effs.anxiety
           }
-        )
+        }
       });
   }
 }

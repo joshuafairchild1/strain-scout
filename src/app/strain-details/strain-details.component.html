@@ -1,5 +1,5 @@
-<div *ngIf='selectedStrain' class="detail-container">
-  <div class="tab-container">
+<div class="detail-container">
+  <div *ngIf='selectedStrain' class="tab-container">
     <ul class="tabs">
       <li class="tab col s3"><a href="#details">Details</a></li>
       <li class="tab col s3"><a href="#flav-eff">Effects and Flavors</a></li>
@@ -15,8 +15,12 @@
       <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
     </div>
 
-    <div id="flav-eff" class="col s12">Effects and flavors works!</div>
+    <div id="flav-eff" class="col s12">
+      Effects and flavors works!
+    </div>
 
-    <div id="company" class="col s12">Seed company works!</div>
+    <div id="company" class="col s12">
+      Seed company works!
+    </div>
   </div>
 </div>

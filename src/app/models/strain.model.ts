@@ -4,6 +4,7 @@ export class Strain {
     public ucpc: string,
     public image: string,
     public genetics: object,
-    public geography: object
+    public geography: object,
+    public effects_flavors: object
   ) {}
 }
