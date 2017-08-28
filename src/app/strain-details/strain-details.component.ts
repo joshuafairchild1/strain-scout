@@ -15,14 +15,21 @@ import 'rxjs/add/operator/mergeMap';
 })
 export class StrainDetailsComponent implements OnInit {
 
-  selectedStrain: Strain = null;
+  private selectedStrain: Strain = null;
+  private chartOptions: any = {
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    }
+
+  }
 
   constructor(
     private route: ActivatedRoute,
     private cannabisService: CannabisReportsService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     const strain: Observable<any> =
       this.route.params
@@ -40,6 +47,16 @@ export class StrainDetailsComponent implements OnInit {
     });
   }
 
+  getStrainEffectValues(): number[] {
+    return Object.keys(this.selectedStrain.effects_flavors.effects)
+      .map(eff => this.selectedStrain.effects_flavors.effects[eff] as number);
+  }
+
+  getStrainEffectKeys(): string[] {
+    return Object.keys(this.selectedStrain.effects_flavors.effects);
+  }
+
 }
 
+// To keep compiler from complaining that '$' is not defined
 declare var $:any

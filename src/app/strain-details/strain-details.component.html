@@ -16,7 +16,14 @@
     </div>
 
     <div id="flav-eff" class="col s12">
-      Effects and flavors works!
+      <div style='display: block'>
+        <canvas baseChart
+                [data]='getStrainEffectValues()'
+                [labels]='getStrainEffectKeys()'
+                [legend]='true'
+                [chartType]='"polarArea"'
+                [options]='chartOptions'></canvas>
+      </div>
     </div>
 
     <div id="company" class="col s12">

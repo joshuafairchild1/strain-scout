@@ -3,8 +3,8 @@ export class Strain {
     public name: string,
     public ucpc: string,
     public image: string,
-    public genetics: object,
-    public geography: object,
-    public effects_flavors: object
+    public genetics: any,
+    public geography: any,
+    public effects_flavors: any
   ) {}
 }
