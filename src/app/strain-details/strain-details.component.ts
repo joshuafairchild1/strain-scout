@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { CannabisReportsService } from './../services/cannabis-reports.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Strain } from './../models/strain.model';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+
+import { CannabisReportsService } from './../services/cannabis-reports.service';
+import { Strain } from './../models/strain.model';
 
 // To keep compiler from complaining that '$' is not defined
 declare var $: any;
@@ -19,7 +19,7 @@ declare var $: any;
 export class StrainDetailsComponent implements OnInit {
 
   private selectedStrain: Strain = null;
-  private effectsChartData: number[] = null;
+  private effectsChartData: string[] = null;
   private effectsChartLabels: string[] = null;
   private flavorsChartData: string[] = null;
   private flavorsChartLabels: string[] = null;
@@ -39,26 +39,26 @@ export class StrainDetailsComponent implements OnInit {
     strain.subscribe((strainModel: Strain) => {
       this.selectedStrain = strainModel;
 
-      this.effectsChartData =
-        Object.keys(this.selectedStrain.effects_flavors.effects)
-          .map(eff => this.selectedStrain.effects_flavors.effects[eff] as number);
+      this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
+      this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
+      this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
+      this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
 
-      this.effectsChartLabels =
-        Object.keys(this.selectedStrain.effects_flavors.effects)
-          .map(eff => eff.charAt(0).toUpperCase() + eff.slice(1).replace(/_/g, ' '));
-
-      this.flavorsChartData =
-        Object.keys(this.selectedStrain.effects_flavors.flavors)
-          .map(flavor => this.selectedStrain.effects_flavors.flavors[flavor]);
-
-      this.flavorsChartLabels =
-        Object.keys(this.selectedStrain.effects_flavors.flavors)
-          .map(flavor => flavor.charAt(0).toUpperCase() + flavor.slice(1).replace(/_/g, ' '));
-
-      // To initialize the Materialize tabs NOT before the strain data is ready
+      /* To initialize the Materialize tabs only
+      after the selectedStrain has been defined */
       $(() => {
         $('ul.tabs').tabs();
       });
     });
+  }
+
+  createChartLabels(strain: Strain, labelFor: string): string[] {
+    return Object.keys(strain.effects_flavors[labelFor])
+      .map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
+  }
+
+  createChartData(strain: Strain, chartName: string): string[] {
+    return Object.keys(strain.effects_flavors.effects)
+      .map(label => strain.effects_flavors.effects[label]);
   }
 }

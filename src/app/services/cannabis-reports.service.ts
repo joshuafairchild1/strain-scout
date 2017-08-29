@@ -65,6 +65,7 @@ export class CannabisReportsService {
             numbness: effs.numbness,
             appetite_gain: effs.appetite_gain,
             dry_mouth: effs.dry_mouth,
+            anxiety: effs.anxiety
           },
           flavors: {
             fruity: effs.fruity,
@@ -73,7 +74,6 @@ export class CannabisReportsService {
             sour: effs.sour,
             sweet: effs.sweet,
             pine: effs.pine,
-            anxiety: effs.anxiety
           }
         };
       });
