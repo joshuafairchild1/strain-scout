@@ -1,36 +1,52 @@
-<div>
-  <label>Enter the name of a cannabis strain</label>
-  <input (keyup.enter)='searchStrains(strain.value); strain.value="";' type="text" class="form-control" #strain>
-  <button (click)='searchStrains(strain.value); strain.value="";' type="submit" class="btn waves-effect waves-light">Search</button>
+<div class="header-area">
+  <h1 id='title'>STRAIN SCOUT</h1>
 </div>
-
-
-<div id="results-container">
-  <div *ngIf='searchResults'>
-
-    <ul class="pagination">
-      <!-- LEFT ARROW -->
-      <li [ngClass]='{disabled: currentPageNumber == 1}'
-          (click)='currentPageNumber == 1 || changePages(currentPageNumber - 1)'  class="waves-effect">
-          <a href="#!"><i class="material-icons">chevron_left</i></a>
-      </li>
-
-      <span class="pages" *ngFor='let pageNumber of pageArray'>
-        <li [ngClass]='{active: currentPageNumber == pageNumber}' (click)='changePages(pageNumber)' class="waves-effect"><a href="#!">{{ pageNumber }}</a></li>
-      </span>
-
-      <!-- RIGHT ARROW -->
-      <li [ngClass]='{disabled: currentPageNumber == pageArray.length}'
-          (click)='currentPageNumber == pageArray.length || changePages(currentPageNumber + 1)' class="waves-effect">
-          <a href="#!"><i class="material-icons">chevron_right</i></a>
-      </li>
-    </ul>
-
-    <div class="search-results">
-      <div *ngFor='let strain of searchResults' class="strain-result">
-          <a routerLink="/strains/{{ strain.ucpc }}"><h4>{{ strain.name }}</h4></a>
+<div class="container">
+  <div class="form-container row">
+    <div class="col s10 offset-s1">
+      <div class="card search-form z-depth-3">
+        <div class="card-content">
+          <p class="landing-description">Strain Scout allows you to search for cannabis strains by name to get an overview of the effects, terpenes, and genetics information. Curious about a strain but you're not sure if you'd like it? Try searching for it below!</p>
+        </div>
+        <div class="card-action">
+          <div class="input-field">
+            <label>Enter the name of a cannabis strain</label>
+            <input (keyup.enter)='searchStrains(strain.value); strain.value="";' type="text" class="form-control" #strain>
+          </div>
+          <button (click)='searchStrains(strain.value); strain.value="";' type="submit" class="btn waves-effect waves-light">Search</button>
+        </div>
       </div>
     </div>
+  </div>
 
+
+  <div id="results-container">
+    <div *ngIf='searchResults'>
+
+      <ul class="pagination">
+        <!-- LEFT ARROW -->
+        <li [ngClass]='{disabled: currentPageNumber == 1}'
+            (click)='currentPageNumber == 1 || changePages(currentPageNumber - 1)'  class="waves-effect">
+            <a href="#!"><i class="material-icons">chevron_left</i></a>
+        </li>
+
+        <span class="pages" *ngFor='let pageNumber of pageArray'>
+          <li [ngClass]='{active: currentPageNumber == pageNumber}' (click)='changePages(pageNumber)' class="waves-effect"><a href="#!">{{ pageNumber }}</a></li>
+        </span>
+
+        <!-- RIGHT ARROW -->
+        <li [ngClass]='{disabled: currentPageNumber == pageArray.length}'
+            (click)='currentPageNumber == pageArray.length || changePages(currentPageNumber + 1)' class="waves-effect">
+            <a href="#!"><i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>
+
+      <div class="search-results collection">
+        <div *ngFor='let strain of searchResults' class="strain-result">
+            <a routerLink="/strains/{{ strain.ucpc }}" class="collection-item"><h4>{{ strain.name }}</h4></a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

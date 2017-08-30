@@ -41,8 +41,10 @@ export class StrainDetailsComponent implements OnInit {
 
       this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
       this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
+      // console.log(this.effectsChartData);
       this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
       this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
+      // console.log(this.flavorsChartData);
 
       /* To initialize the Materialize tabs only
       after the selectedStrain has been defined */
@@ -58,7 +60,12 @@ export class StrainDetailsComponent implements OnInit {
   }
 
   createChartData(strain: Strain, chartName: string): string[] {
-    return Object.keys(strain.effects_flavors.effects)
-      .map(label => strain.effects_flavors.effects[label]);
+    const keys = Object.keys(strain.effects_flavors[chartName])
+    console.log(keys)
+
+    const data = keys.map(key => strain.effects_flavors[chartName][key]);
+    console.log(data)
+
+    return data;
   }
 }

@@ -55,7 +55,7 @@ export class CannabisReportsService {
   getStrainEffects(ucpc: string): Observable<any> {
     const url = `https://www.cannabisreports.com/api/v1.0/strains/${ucpc}/effectsFlavors`;
     return this.http.get(url)
-      .map((res: any) => res.json().data)
+      .map((res: any): any => res.json().data)
       .map((effs: any): any => {
         return {
           effects: {
