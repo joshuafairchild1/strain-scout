@@ -3,7 +3,7 @@
 <div class="detail-container container">
   <div *ngIf='selectedStrain' class="tab-container">
 
-    <i class="material-icons large back-button">arrow_back</i>
+    <i routerLink='/' class="material-icons large back-button">arrow_back</i>
 
     <ul class="tabs">
       <li class="tab col s3"><a href="#details">Details</a></li>
@@ -17,8 +17,8 @@
           <div class="col s6" id='details-q1'>
             <div>
               <h2>{{ selectedStrain.name }}</h2>
-              <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
               <small>
+                <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
                 <a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">
                   What is this?
                 </a>
