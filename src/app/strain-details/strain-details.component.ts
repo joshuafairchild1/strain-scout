@@ -40,10 +40,7 @@ export class StrainDetailsComponent implements OnInit {
       this.selectedStrain = strainModel;
 
       this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
-      console.log(this.effectsChartLabels)
       this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
-      console.log(this.effectsChartData)
-
       this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
       this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
 

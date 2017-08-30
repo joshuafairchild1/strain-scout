@@ -10,19 +10,29 @@
       <div class="card-content">
         <div class="row">
           <div class="col s6" id='details-q1'>
-            <div class="">
+            <div>
               <h2>{{ selectedStrain.name }}</h2>
               <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
-              <small><a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">What is this?</a></small>
+              <small>
+                <a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">
+                  What is this?
+                </a>
+              </small>
             </div>
           </div>
           <div class="col s6 center-align" id='details-q2'>
-            <img src="{{ selectedStrain.image }}" class="circle main-image"/>
+            <img src="{{ selectedStrain.image }}" class="circle"/>
           </div>
         </div>
-        <h6>{{ selectedStrain.genetics.names }}</h6>
-        <h5>Lineage tracing back to:</h5>
-        <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
+        <div class="row">
+          <div class="col s6" id='genetics'>
+            <p>{{ selectedStrain.genetics.names }}</p>
+          </div>
+          <div class="col s6">
+            <h5>Lineage tracing back to:</h5>
+            <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -43,7 +53,6 @@
                   [chartType]='"polarArea"'></canvas>
         </div>
       </div>
-
     </div>
 
     <div id="company" class="col s12 card">
