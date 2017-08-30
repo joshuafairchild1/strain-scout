@@ -1,5 +1,6 @@
 <div class="header-area">
   <h1 id='title'>STRAIN SCOUT</h1>
+  <img id='main-logo' src="./../../assets/images/ss-icon.png" alt="">
 </div>
 <div class="container">
   <div class="form-container row">
@@ -11,7 +12,10 @@
         <div class="card-action">
           <div class="input-field">
             <label>Enter the name of a cannabis strain</label>
-            <input (keyup.enter)='searchStrains(strain.value); strain.value="";' type="text" class="form-control" #strain>
+            <input (keyup.enter)='searchStrains(strain.value); strain.value="";'
+                    type="text"
+                    class="form-control"
+                    #strain>
           </div>
           <button (click)='searchStrains(strain.value); strain.value="";' type="submit" class="btn waves-effect waves-light">Search</button>
         </div>
