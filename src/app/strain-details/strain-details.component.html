@@ -6,17 +6,26 @@
       <li class="tab col s3"><a href="#company">Seed Company</a></li>
     </ul>
 
-    <div id="details" class="col s12">
-      <h2>{{ selectedStrain.name }}</h2>
-      <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
-      <img src="{{ selectedStrain.image }}" class="circle main-image"/>
-      <h6>{{ selectedStrain.genetics.names }}</h6>
-      <h5>Lineage tracing back to:</h5>
-      <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
+    <div id="details" class="col s12 card">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s6">
+            <h2>{{ selectedStrain.name }}</h2>
+            <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
+            <small><a href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">What is this?</a></small>
+          </div>
+          <div class="col s6 center-align">
+            <img src="{{ selectedStrain.image }}" class="circle main-image"/>
+          </div>
+        </div>
+        <h6>{{ selectedStrain.genetics.names }}</h6>
+        <h5>Lineage tracing back to:</h5>
+        <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
+      </div>
     </div>
 
-    <div id="flav-eff" class="col s12">
-      <div class="row">
+    <div id="flav-eff" class="col s12 card">
+      <div class="row card-content">
         <div class="col m6" style='display: block'>
           <canvas baseChart
                   [data]='effectsChartData'
@@ -35,7 +44,7 @@
 
     </div>
 
-    <div id="company" class="col s12">
+    <div id="company" class="col s12 card">
       Seed company works!
     </div>
   </div>
