@@ -1,12 +1,17 @@
+<div class="bg-area">
+</div>
 <div class="detail-container container">
   <div *ngIf='selectedStrain' class="tab-container">
+
+    <i class="material-icons large back-button">arrow_back</i>
+
     <ul class="tabs">
       <li class="tab col s3"><a href="#details">Details</a></li>
       <li class="tab col s3"><a href="#flav-eff">Effects and Flavors</a></li>
       <li class="tab col s3"><a href="#company">Seed Company</a></li>
     </ul>
 
-    <div id="details" class="col s12 card">
+    <div id="details" class="col s12 card z-depth-3">
       <div class="card-content">
         <div class="row">
           <div class="col s6" id='details-q1'>
@@ -25,18 +30,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col s6" id='genetics'>
+          <div class="col s6 center-align" id='genetics'>
             <p>{{ selectedStrain.genetics.names }}</p>
           </div>
           <div class="col s6">
             <h5>Lineage tracing back to:</h5>
-            <p *ngFor='let country of selectedStrain.geography.countries'>{{ country }}</p>
+            <div id='lineage'>
+              <div *ngFor='let country of selectedStrain.geography.countries' class="chip">
+                <p>{{ country }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="flav-eff" class="col s12 card">
+    <div id="flav-eff" class="col s12 card z-depth-3">
       <div class="row card-content">
         <div class="col m6" style='display: block'>
           <canvas baseChart
@@ -55,8 +64,10 @@
       </div>
     </div>
 
-    <div id="company" class="col s12 card">
-      Seed company works!
+    <div id="company" class="col s12 card z-depth-3">
+      <div class="card-content">
+        <p>Seed company works!</p>
+      </div>
     </div>
   </div>
 </div>
