@@ -25,14 +25,18 @@ export class StrainSearchComponent {
     this.currentPageNumber = 1;
     this.searchedStrainEndpoint = `${this.cannabisService.searchEndpoint}${query}`;
     this.cannabisService.searchStrains(query)
-      .subscribe(data => {
-        let usedPages: number;
-        const totalPages: number = data.meta.pagination.total_pages;
-        totalPages >= 10 ? usedPages = 10 : usedPages = totalPages;
-        this.pageArray = Array.from(new Array(usedPages), (val, index) => index + 1);
+      .subscribe(
+        data => {
+          let usedPages: number;
+          const totalPages: number = data.meta.pagination.total_pages;
+          totalPages >= 10 ? usedPages = 10 : usedPages = totalPages;
+          this.pageArray = Array.from(new Array(usedPages), (val, index) => index + 1);
 
-        this.setSearchResults(data, 1);
-      });
+          this.setSearchResults(data, 1);
+        },
+
+        error => console.log(error.json())
+      );
   }
 
   changePages(pageNumber: number): void {

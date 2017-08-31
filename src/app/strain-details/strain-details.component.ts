@@ -36,25 +36,29 @@ export class StrainDetailsComponent implements OnInit {
         .map(params => params['ucpc'])
         .mergeMap(ucpc => this.cannabisService.getStrainDetails(ucpc));
 
-    strain.subscribe((strainModel: Strain) => {
-      this.selectedStrain = strainModel;
+    strain.subscribe(
+      (strainModel: Strain) => {
+        this.selectedStrain = strainModel;
 
-      this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
-      this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
-      this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
-      this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
+        this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
+        this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
+        this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
+        this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
 
-      /* To initialize the Materialize tabs only
-      after the selectedStrain has been defined */
-      $(() => {
-        $('ul.tabs').tabs();
-      });
-    });
+        /* To initialize the Materialize tabs only
+        after the selectedStrain has been defined */
+        $(() => {
+          $('ul.tabs').tabs();
+        });
+      },
+
+      (error) => console.log(error.json())
+    );
   }
 
-  createChartLabels(strain: Strain, labelFor: string): string[] {
-    return Object.keys(strain.effects_flavors[labelFor])
-      .filter(key => strain.effects_flavors[labelFor][key])
+  createChartLabels(strain: Strain, chartName: string): string[] {
+    return Object.keys(strain.effects_flavors[chartName])
+      .filter(key => strain.effects_flavors[chartName][key])
       .map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
   }
 
