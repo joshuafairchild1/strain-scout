@@ -15,29 +15,42 @@
       <div class="card-content">
         <div class="row">
           <div class="col s6" id='details-q1'>
-            <div>
-              <h2>{{ selectedStrain.name }}</h2>
-              <small>
-                <h5>UCPC: {{ selectedStrain.ucpc }}</h5>
-                <a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">
-                  What is this?
-                </a>
-              </small>
+            <div class="card detail-card">
+              <div class="card-content">
+                <h2>{{ selectedStrain.name }}</h2>
+                <p>
+                  UCPC: {{ selectedStrain.ucpc }} <br>
+                  <small><a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">What is this?</a></small>
+                </p>
+               </div>
             </div>
           </div>
           <div class="col s6 center-align" id='details-q2'>
-            <img src="{{ selectedStrain.image }}" class="circle"/>
+            <img src="{{ selectedStrain.image }}" class="circle large"/>
           </div>
         </div>
         <div class="row">
           <div class="col s6 center-align" id='genetics'>
-            <p>{{ selectedStrain.genetics.names }}</p>
+            <div class="card detail-card">
+              <div class="card-content">
+                <p><small>Genetics:</small></p>
+                <p *ngIf="selectedStrain.genetics.names != false">{{ selectedStrain.genetics.names }}</p>
+                <p *ngIf="selectedStrain.genetics.names == false">No genetics information available.</p>
+              </div>
+            </div>
           </div>
           <div class="col s6">
-            <h5>Lineage tracing back to:</h5>
-            <div id='lineage'>
-              <div *ngFor='let country of selectedStrain.geography.countries' class="chip">
-                <p>{{ country }}</p>
+            <div class="card detail-card">
+              <div class="card-content">
+                <h5>Lineage tracing back to:</h5>
+                <div id='lineage'>
+                  <div *ngFor='let country of selectedStrain.geography.countries' class="chip">
+                    <p>{{ country }}</p>
+                  </div>
+                  <div *ngIf='!selectedStrain.geography.countries.length'>
+                    <p>No lineage information available.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -48,14 +61,16 @@
     <div id="flav-eff" class="col s12 card z-depth-3">
       <div class="row card-content">
         <div class="charts" *ngIf='chartsValid'>
-          <div class="col m6" style='display: block'>
+          <div class="col m6 center-align" style='display: block'>
+            <h3>Effects</h3>
             <canvas baseChart
                     [data]='effectsChartData.values'
                     [labels]='effectsChartData.labels'
                     [legend]='true'
                     [chartType]='"polarArea"'></canvas>
           </div>
-          <div class="col m6">
+          <div class="col m6 center-align">
+            <h3>Flavors</h3>
             <canvas baseChart
                     [data]='flavorsChartData.values'
                     [labels]='flavorsChartData.labels'
