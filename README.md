@@ -1,28 +1,40 @@
-# StrainScout
+# Strain Scout
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+By Joshua Fairchild, August 2017
 
-## Development server
+## Description
+coming soon 💯
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation Requirements
+You must have the following software installed on your machine:
 
-## Code scaffolding
+* [Git](https://git-scm.com/)
+* [NodeJS](https://nodejs.org/) and npm
+* [TypeScript](https://www.typescriptlang.org/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+## Setup Instructions
 
-## Build
+* Clone this repository
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+  `$ git clone https://github.com/joshuafairchild1/strain-scout`
 
-## Running unit tests
+* Run the following command from the root directory:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  `$ npm install`
 
-## Running end-to-end tests
+This will download the project's dependencies
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+* Run `$ ng serve` for a development server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Further help
+## Built With
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* Angular 4 using TypeScript
+* Angular CLI v1.0.0
+* [CannabisReports](https://www.cannabisreports.com/) API
+* SASS
+
+## License
+
+This application is licensed under the MIT License
+
+Joshua Fairchild Copyright (c) 2017
