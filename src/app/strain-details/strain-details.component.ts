@@ -19,10 +19,8 @@ declare var $: any;
 export class StrainDetailsComponent implements OnInit {
 
   private selectedStrain: Strain = null;
-  private effectsChartData: string[] = null;
-  private effectsChartLabels: string[] = null;
-  private flavorsChartData: string[] = null;
-  private flavorsChartLabels: string[] = null;
+  private effectsChartData: any = null;
+  private flavorsChartData: any = null;
   private chartsValid: boolean = null;
 
   constructor(
@@ -40,16 +38,9 @@ export class StrainDetailsComponent implements OnInit {
     strain.subscribe(
       (strainModel: Strain) => {
         this.selectedStrain = strainModel;
-        console.log(strainModel)
-
-        this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
         this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
-        this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
         this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
-        this.chartsValid = this.effectsAndFlavorsValid(this.effectsChartData, this.flavorsChartData);
-        console.log(this.effectsChartData)
-        console.log(this.flavorsChartData)
-        console.log(this.chartsValid)
+        this.chartsValid = effectsAndFlavorsValid(this.effectsChartData.values, this.flavorsChartData.values);
 
         /* To initialize the Materialize tabs only
         after the selectedStrain has been defined */
@@ -62,19 +53,18 @@ export class StrainDetailsComponent implements OnInit {
     );
   }
 
-  createChartLabels(strain: Strain, chartName: string): string[] {
-    return Object.keys(strain.effects_flavors[chartName])
+  createChartData(strain: Strain, chartName: string): any {
+    let rawLabels = Object.keys(strain.effects_flavors[chartName])
       .filter(key => strain.effects_flavors[chartName][key])
-      .map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
-  }
 
-  createChartData(strain: Strain, chartName: string): string[] {
-    return Object.keys(strain.effects_flavors[chartName])
+    const values = rawLabels
       .map(key => strain.effects_flavors[chartName][key])
-      .filter(val => val);
-  }
+      .filter(val => val)
 
-  effectsAndFlavorsValid(effects: string[], flavors: string[]): boolean {
-    return !!(effects.length && flavors.length);
+    const labels =  rawLabels.map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
+    return {labels, values};
   }
 }
+
+const effectsAndFlavorsValid =
+  (effects: string[], flavors: string[]): boolean =>!!(effects.length && flavors.length);

@@ -50,15 +50,15 @@
         <div class="charts" *ngIf='chartsValid'>
           <div class="col m6" style='display: block'>
             <canvas baseChart
-                    [data]='effectsChartData'
-                    [labels]='effectsChartLabels'
+                    [data]='effectsChartData.values'
+                    [labels]='effectsChartData.labels'
                     [legend]='true'
                     [chartType]='"polarArea"'></canvas>
           </div>
           <div class="col m6">
             <canvas baseChart
-                    [data]='flavorsChartData'
-                    [labels]='flavorsChartLabels'
+                    [data]='flavorsChartData.values'
+                    [labels]='flavorsChartData.labels'
                     [legend]='true'
                     [chartType]='"polarArea"'></canvas>
           </div>
