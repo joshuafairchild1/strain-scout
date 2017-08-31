@@ -54,17 +54,17 @@ export class StrainDetailsComponent implements OnInit {
   }
 
   createChartData(strain: Strain, chartName: string): any {
-    let rawLabels = Object.keys(strain.effects_flavors[chartName])
-      .filter(key => strain.effects_flavors[chartName][key])
+    const rawLabels = Object.keys(strain.effects_flavors[chartName])
+      .filter(key => strain.effects_flavors[chartName][key]);
 
     const values = rawLabels
       .map(key => strain.effects_flavors[chartName][key])
-      .filter(val => val)
+      .filter(val => val);
 
-    const labels =  rawLabels.map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
+    const labels =  rawLabels
+      .map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
     return {labels, values};
   }
 }
 
-const effectsAndFlavorsValid =
-  (effects: string[], flavors: string[]): boolean =>!!(effects.length && flavors.length);
+const effectsAndFlavorsValid = (effects: string[], flavors: string[]): boolean => !!(effects.length && flavors.length);
