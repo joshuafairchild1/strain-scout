@@ -47,19 +47,24 @@
 
     <div id="flav-eff" class="col s12 card z-depth-3">
       <div class="row card-content">
-        <div class="col m6" style='display: block'>
-          <canvas baseChart
-                  [data]='effectsChartData'
-                  [labels]='effectsChartLabels'
-                  [legend]='true'
-                  [chartType]='"polarArea"'></canvas>
+        <div class="charts" *ngIf='chartsValid'>
+          <div class="col m6" style='display: block'>
+            <canvas baseChart
+                    [data]='effectsChartData'
+                    [labels]='effectsChartLabels'
+                    [legend]='true'
+                    [chartType]='"polarArea"'></canvas>
+          </div>
+          <div class="col m6">
+            <canvas baseChart
+                    [data]='flavorsChartData'
+                    [labels]='flavorsChartLabels'
+                    [legend]='true'
+                    [chartType]='"polarArea"'></canvas>
+          </div>
         </div>
-        <div class="col m6">
-          <canvas baseChart
-                  [data]='flavorsChartData'
-                  [labels]='flavorsChartLabels'
-                  [legend]='true'
-                  [chartType]='"polarArea"'></canvas>
+        <div class="charts-error" *ngIf='!chartsValid'>
+          Uhoh!
         </div>
       </div>
     </div>

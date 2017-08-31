@@ -23,6 +23,7 @@ export class StrainDetailsComponent implements OnInit {
   private effectsChartLabels: string[] = null;
   private flavorsChartData: string[] = null;
   private flavorsChartLabels: string[] = null;
+  private chartsValid: boolean = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +40,16 @@ export class StrainDetailsComponent implements OnInit {
     strain.subscribe(
       (strainModel: Strain) => {
         this.selectedStrain = strainModel;
+        console.log(strainModel)
 
         this.effectsChartLabels = this.createChartLabels(this.selectedStrain, 'effects');
         this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
         this.flavorsChartLabels = this.createChartLabels(this.selectedStrain, 'flavors');
         this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
+        this.chartsValid = this.effectsAndFlavorsValid(this.effectsChartData, this.flavorsChartData);
+        console.log(this.effectsChartData)
+        console.log(this.flavorsChartData)
+        console.log(this.chartsValid)
 
         /* To initialize the Materialize tabs only
         after the selectedStrain has been defined */
@@ -66,5 +72,9 @@ export class StrainDetailsComponent implements OnInit {
     return Object.keys(strain.effects_flavors[chartName])
       .map(key => strain.effects_flavors[chartName][key])
       .filter(val => val);
+  }
+
+  effectsAndFlavorsValid(effects: string[], flavors: string[]): boolean {
+    return !!(effects.length && flavors.length);
   }
 }

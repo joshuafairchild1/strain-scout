@@ -35,7 +35,7 @@ export class StrainSearchComponent {
           this.setSearchResults(data, 1);
         },
 
-        error => console.log(error.json())
+        (error) => console.log(error.json())
       );
   }
 
