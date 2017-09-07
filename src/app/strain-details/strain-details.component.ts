@@ -18,10 +18,10 @@ declare var $: any;
 })
 export class StrainDetailsComponent implements OnInit {
 
-  private selectedStrain: Strain = null;
+  private strain: Strain = null;
   private effectsChartData: any = null;
   private flavorsChartData: any = null;
-  private chartsValid: boolean = null;
+  private chartsAreValid: boolean = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,20 +30,20 @@ export class StrainDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const strain: Observable<any> =
+    const strainObservable: Observable<any> =
       this.route.params
-        .map(params => params['ucpc'])
-        .mergeMap(ucpc => this.cannabisService.getStrainDetails(ucpc));
+        .map((params): string => params['ucpc'])
+        .mergeMap(ucpc => this.cannabisService.createStrainModel(ucpc));
 
-    strain.subscribe(
+    strainObservable.subscribe(
       (strainModel: Strain) => {
-        this.selectedStrain = strainModel;
-        this.effectsChartData = this.createChartData(this.selectedStrain, 'effects');
-        this.flavorsChartData = this.createChartData(this.selectedStrain, 'flavors');
-        this.chartsValid = effectsAndFlavorsValid(this.effectsChartData.values, this.flavorsChartData.values);
+        this.strain = strainModel;
+        this.effectsChartData = this.createChartData(this.strain, 'effects');
+        this.flavorsChartData = this.createChartData(this.strain, 'flavors');
+        this.chartsAreValid = effectsAndFlavorsValid(this.effectsChartData.values, this.flavorsChartData.values);
 
         /* To initialize the Materialize tabs only
-        after the selectedStrain has been defined */
+        after the strain has been defined */
         $(() => {
           $('ul.tabs').tabs();
         });
@@ -53,16 +53,19 @@ export class StrainDetailsComponent implements OnInit {
     );
   }
 
+
   createChartData(strain: Strain, chartName: string): any {
-    const rawLabels = Object.keys(strain.effects_flavors[chartName])
-      .filter(key => strain.effects_flavors[chartName][key]);
+    // Gets the keys only for properties that are defined and not 0
+    const unformattedLabels: string[] =
+      Object.keys(strain.effects_flavors[chartName])
+        .filter(key => +strain.effects_flavors[chartName][key]);
 
-    const values = rawLabels
-      .map(key => strain.effects_flavors[chartName][key])
-      .filter(val => val);
+    const values = unformattedLabels
+      .map(key => strain.effects_flavors[chartName][key]);
 
-    const labels =  rawLabels
+    const labels =  unformattedLabels
       .map(label => label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' '));
+
     return {labels, values};
   }
 }

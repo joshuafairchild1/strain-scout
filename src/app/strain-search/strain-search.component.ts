@@ -10,11 +10,11 @@ import { CannabisReportsService } from './../services/cannabis-reports.service';
 })
 export class StrainSearchComponent {
 
-  searchResults: StrainResult[] = null;
-  currentPageNumber: number = null;
-  searchedStrainEndpoint: string = null;
-  savedSearchResults: object = {};
-  pageArray: number[] = null;
+  private searchResults: StrainResult[] = null;
+  private currentPageNumber: number = null;
+  private searchedStrainEndpoint: string = null;
+  private savedSearchResults: object = {};
+  private pageArray: number[] = null;
 
   constructor(
     private cannabisService: CannabisReportsService,
@@ -40,20 +40,23 @@ export class StrainSearchComponent {
   }
 
   changePages(pageNumber: number): void {
-    this.currentPageNumber = pageNumber;
     const url = `${this.searchedStrainEndpoint}/?page=${pageNumber}`;
-    if (this.savedSearchResults[pageNumber]) {
-      this.searchResults = this.savedSearchResults[pageNumber];
-    } else {
-      this.http.get(url)
-        .map(res => res.json())
-        .subscribe(data => this.setSearchResults(data, pageNumber));
-    }
+    this.currentPageNumber = pageNumber;
+    this.savedSearchResults[pageNumber]
+        ? this.searchResults = this.savedSearchResults[pageNumber]
+        : this.http.get(url)
+            .map(res => res.json())
+            .subscribe(data => this.setSearchResults(data, pageNumber));
+
   }
 
   setSearchResults(apiResponse: any, pageNumber: number): void {
-    this.searchResults = this.cannabisService.generateStrainResultModels(apiResponse);
+    this.searchResults = this.generateStrainResultModels(apiResponse);
     this.savedSearchResults[pageNumber] = this.searchResults;
+  }
+
+  generateStrainResultModels(apiResponse: any): StrainResult[] {
+    return apiResponse.data.map(strain => new StrainResult(strain.name, strain.ucpc));
   }
 
 }

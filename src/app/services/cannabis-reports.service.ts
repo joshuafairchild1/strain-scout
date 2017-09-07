@@ -8,7 +8,7 @@ import { Strain } from './../models/strain.model';
 export class CannabisReportsService {
 
   public searchEndpoint = 'https://www.cannabisreports.com/api/v1.0/strains/search/'; //  /strain_name
-  public strainDetailsEndpoint = `https://www.cannabisreports.com/api/v1.0/strains/`; //  /ucpc
+  private strainDetailsEndpoint = `https://www.cannabisreports.com/api/v1.0/strains/`; //  /ucpc
 
   constructor(private http: Http) { }
 
@@ -18,38 +18,35 @@ export class CannabisReportsService {
       .map(res => res.json());
   }
 
-  generateStrainResultModels(apiResponse: any): StrainResult[] {
-    return apiResponse.data.map(s => new StrainResult(s.name, s.ucpc));
-  }
-
   getRawStrainInfo(ucpc: string): Observable<any> {
     const url = `${this.strainDetailsEndpoint}${ucpc}`;
     return this.http.get(url)
       .map(res => res.json().data);
   }
 
-  getStrainDetails(ucpc: string): Observable<Strain> {
+  createStrainModel(ucpc: string): Observable<Strain> {
     const strainEffects: Observable<any> = this.getStrainEffects(ucpc);
+    const strainDetails: Observable<any> = this.getRawStrainInfo(ucpc);
 
-    const strainDetailResponse: Observable<any> = this.getRawStrainInfo(ucpc);
-
-    const strain: Observable<Strain> =
-      Observable.forkJoin([strainDetailResponse, strainEffects])
-        .map((res: any) => {
-          return new Strain(
-            res[0].name,
-            res[0].ucpc,
-            res[0].image,
-            res[0].genetics,
-            {
-              countries: Object.keys(res[0].lineage),
-              countryCodes: Object.keys(res[0].lineage).map(key => res[0].lineage[key])
-            },
-            res[1]
-          );
-        });
-
-    return strain;
+    /* forkJoin is used here to avoid the issue caused by needing an
+       object (strain) that requires data received by multiple api calls.
+       Alternatives would be a nested subscription on the two observables above,
+       or flatMapping within a subscription. I decided this was the
+       most eloquent solution. */
+    return Observable.forkJoin([strainDetails, strainEffects])
+      .map((res: any) => {
+        return new Strain(
+          res[0].name,
+          res[0].ucpc,
+          res[0].image,
+          res[0].genetics,
+          {
+            countries: Object.keys(res[0].lineage),
+            countryCodes: Object.keys(res[0].lineage).map(key => res[0].lineage[key])
+          },
+          res[1]
+        );
+      });
   }
 
   getStrainEffects(ucpc: string): Observable<any> {
@@ -57,6 +54,9 @@ export class CannabisReportsService {
     return this.http.get(url)
       .map((res: any): any => res.json().data)
       .map((effs: any): any => {
+
+        /* NOTE At this point the object being returned should
+           definitely have a model of its own... */
         return {
           effects: {
             euphoria: effs.euphoria,

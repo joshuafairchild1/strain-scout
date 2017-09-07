@@ -1,7 +1,7 @@
 <div class="bg-area">
 </div>
 <div class="detail-container container">
-  <div *ngIf='selectedStrain' class="tab-container">
+  <div *ngIf='strain' class="tab-container">
 
     <i routerLink='/' class="material-icons large back-button">arrow_back</i>
 
@@ -17,16 +17,16 @@
           <div class="col s6" id='details-q1'>
             <div class="card detail-card">
               <div class="card-content">
-                <h2>{{ selectedStrain.name }}</h2>
+                <h2>{{ strain.name }}</h2>
                 <p>
-                  UCPC: {{ selectedStrain.ucpc }} <br>
+                  UCPC: {{ strain.ucpc }} <br>
                   <small><a target='_blank' href="https://developers.cannabisreports.com/docs/ucpc-universal-cannabis-product-code">What is this?</a></small>
                 </p>
                </div>
             </div>
           </div>
           <div class="col s6 center-align" id='details-q2'>
-            <img src="{{ selectedStrain.image }}" class="circle large"/>
+            <img src="{{ strain.image }}" class="circle large"/>
           </div>
         </div>
         <div class="row">
@@ -34,8 +34,8 @@
             <div class="card detail-card">
               <div class="card-content">
                 <p><small>Genetics:</small></p>
-                <p *ngIf="selectedStrain.genetics.names != false">{{ selectedStrain.genetics.names }}</p>
-                <p *ngIf="selectedStrain.genetics.names == false">No genetics information available.</p>
+                <p *ngIf="strain.genetics.names != false">{{ strain.genetics.names }}</p>
+                <p *ngIf="strain.genetics.names == false">No genetics information available.</p>
               </div>
             </div>
           </div>
@@ -44,10 +44,10 @@
               <div class="card-content">
                 <h5>Lineage tracing back to:</h5>
                 <div id='lineage'>
-                  <div *ngFor='let country of selectedStrain.geography.countries' class="chip">
+                  <div *ngFor='let country of strain.geography.countries' class="chip">
                     <p>{{ country }}</p>
                   </div>
-                  <div *ngIf='!selectedStrain.geography.countries.length'>
+                  <div *ngIf='!strain.geography.countries.length'>
                     <p>No lineage information available.</p>
                   </div>
                 </div>
@@ -60,7 +60,7 @@
 
     <div id="flav-eff" class="col s12 card z-depth-3">
       <div class="row card-content">
-        <div class="charts" *ngIf='chartsValid'>
+        <div class="charts" *ngIf='chartsAreValid'>
           <div class="col m6 center-align" style='display: block'>
             <h3>Effects</h3>
             <canvas baseChart
@@ -78,7 +78,7 @@
                     [chartType]='"polarArea"'></canvas>
           </div>
         </div>
-        <div class="charts-error center-align" *ngIf='!chartsValid'>
+        <div class="charts-error center-align" *ngIf='!chartsAreValid'>
           <h4>Unfortunately there is no effect or flavor data available for this strain.</h4>
           <img src="./../../assets/images/highdy-sad.jpg">
         </div>
