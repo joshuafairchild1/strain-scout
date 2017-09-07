@@ -27,15 +27,14 @@ export class StrainSearchComponent {
     this.cannabisService.searchStrains(query)
       .subscribe(
         data => {
-          let usedPages: number;
           const totalPages: number = data.meta.pagination.total_pages;
-          totalPages >= 10 ? usedPages = 10 : usedPages = totalPages;
+          const usedPages: number = totalPages >= 10 ? 10 : totalPages;
           this.pageArray = Array.from(new Array(usedPages), (val, index) => index + 1);
 
           this.setSearchResults(data, 1);
         },
 
-        (error) => console.log(error.json())
+        error => logError
       );
   }
 
@@ -46,7 +45,10 @@ export class StrainSearchComponent {
         ? this.searchResults = this.savedSearchResults[pageNumber]
         : this.http.get(url)
             .map(res => res.json())
-            .subscribe(data => this.setSearchResults(data, pageNumber));
+            .subscribe(
+              data => this.setSearchResults(data, pageNumber),
+              error => logError
+            );
 
   }
 
@@ -60,3 +62,5 @@ export class StrainSearchComponent {
   }
 
 }
+
+const logError = (error: Response) => console.log(error.json());

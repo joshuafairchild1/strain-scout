@@ -49,7 +49,7 @@ export class StrainDetailsComponent implements OnInit {
         });
       },
 
-      (error) => console.log(error.json())
+      error => console.log(error.json())
     );
   }
 
