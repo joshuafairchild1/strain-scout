@@ -18,7 +18,7 @@ declare var $: any;
 })
 export class StrainDetailsComponent implements OnInit {
 
-  private strain: Strain = null;
+  strain: Strain = null;
   private effectsChartData: any = null;
   private flavorsChartData: any = null;
   private chartsAreValid: boolean = null;

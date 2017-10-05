@@ -10,7 +10,7 @@ import { CannabisReportsService } from './../services/cannabis-reports.service';
 })
 export class StrainSearchComponent {
 
-  private searchResults: StrainResult[] = null;
+  searchResults: StrainResult[] = null;
   private currentPageNumber: number = null;
   private searchedStrainEndpoint: string = null;
   private savedSearchResults: object = {};
