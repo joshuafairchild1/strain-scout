@@ -5,7 +5,9 @@
 #### [Live site viewable here](https://strainscout.herokuapp.com/)
 
 ## Description
-Strain Scout is an application that provides an easy to use interface for browsing cannabis strains and getting an overview of information about specific strains. Currently the application allows users to search for strains by name and then view a details page containing the strain's genetics, geographic lineage, effects, and terpene flavors. Future plans for the project include:
+The frontend of the application was created with Angular CLI and Materialize. An Express server is used for making requests to the Cannabis Reports API, and RxJS is used for handling API responses.
+
+The application provides a simple interface for browsing cannabis strains and getting an overview of information about specific strains. Currently the application allows users to search for strains by name and then view a details page containing the strain's genetics, geographic lineage, effects, and terpene flavors. Future plans for the project include:
 * Allowing a user to view more information about the genetic parents of a given strain.
 * Provide users with an option to search for strains based off of parameters (effects, flavors, location, seed company, etc) rather than name alone.
 * Provide a user with a list of reviews for the strain that they are viewing.
@@ -49,10 +51,13 @@ This will download the project's dependencies
 
 * Run `$ ng serve` for a development server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+* The express server is started by running `node server.js` from the root of the project.
+
 ## Built With
 
 * Angular 4 using TypeScript
 * Angular CLI v1.0.0
+* ExpressJS
 * [CannabisReports](https://www.cannabisreports.com/) API
 * SASS
 
