@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { StrainResult } from './../models/strain-result.model';
 import { Strain } from './../models/strain.model';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class CannabisReportsService {
@@ -12,15 +13,18 @@ export class CannabisReportsService {
 
   constructor(private http: Http) { }
 
+  get(url: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/api/pages/${url}`)
+      .map(res => res.json())
+  }
+
   searchStrains(query: string): Observable<any> {
-    const url = `${this.searchEndpoint}${query}`;
-    return this.http.get(url)
+    return this.http.get(`http://localhost:3000/api/search/${query}`)
       .map(res => res.json());
   }
 
   getRawStrainInfo(ucpc: string): Observable<any> {
-    const url = `${this.strainDetailsEndpoint}${ucpc}`;
-    return this.http.get(url)
+    return this.http.get(`http://localhost:3000/api/details/${ucpc}`)
       .map(res => res.json().data);
   }
 
@@ -50,7 +54,7 @@ export class CannabisReportsService {
   }
 
   getStrainEffects(ucpc: string): Observable<any> {
-    const url = `https://www.cannabisreports.com/api/v1.0/strains/${ucpc}/effectsFlavors`;
+    const url = `http://localhost:3000/api/effectsFlavors/${ucpc}`;
     return this.http.get(url)
       .map((res: any): any => res.json().data)
       .map((effs: any): any => {

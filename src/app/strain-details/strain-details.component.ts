@@ -40,16 +40,14 @@ export class StrainDetailsComponent implements OnInit {
         this.strain = strainModel;
         this.effectsChartData = this.createChartData(this.strain, 'effects');
         this.flavorsChartData = this.createChartData(this.strain, 'flavors');
-        this.chartsAreValid = effectsAndFlavorsValid(this.effectsChartData.values, this.flavorsChartData.values);
+        this.chartsAreValid = !!(this.effectsChartData.values.length && this.flavorsChartData.values.length);
 
         /* To initialize the Materialize tabs only
         after the strain has been defined */
-        $(() => {
-          $('ul.tabs').tabs();
-        });
+        $(() => $('ul.tabs').tabs());
       },
 
-      error => console.log(error.json())
+      error => console.log(error)
     );
   }
 
@@ -69,5 +67,3 @@ export class StrainDetailsComponent implements OnInit {
     return {labels, values};
   }
 }
-
-const effectsAndFlavorsValid = (effects: string[], flavors: string[]): boolean => !!(effects.length && flavors.length);

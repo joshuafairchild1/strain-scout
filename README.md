@@ -2,9 +2,7 @@
 
 ##### By Joshua Fairchild, August 2017 - Epicodus Capstone Project
 
-#### [Live site available here!](https://strainscout.herokuapp.com/)
-
-##### *To use this application, your web browser must be [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) compliant. I recommend installing and activating [this chrome extension](https://chrome.google.com/webstore/category/extensions?hl=en) to enable CORS in your web browser.*
+#### [Live site viewable here](https://strainscout.herokuapp.com/)
 
 ## Description
 Strain Scout is an application that provides an easy to use interface for browsing cannabis strains and getting an overview of information about specific strains. Currently the application allows users to search for strains by name and then view a details page containing the strain's genetics, geographic lineage, effects, and terpene flavors. Future plans for the project include:
