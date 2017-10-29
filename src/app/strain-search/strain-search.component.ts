@@ -22,7 +22,7 @@ export class StrainSearchComponent {
   searchStrains(query: string): void {
     this.savedSearchResults = {}
     this.currentPageNumber = 1;
-    this.searchedStrainEndpoint = `${this.cannabisService.searchEndpoint}${query}`;
+    this.searchedStrainEndpoint = `https://www.cannabisreports.com/api/v1.0/strains/search/${query}`;
     this.cannabisService.searchStrains(query)
       .subscribe(
         data => {
@@ -35,13 +35,12 @@ export class StrainSearchComponent {
 
   changePages(pageNumber: number): void {
     const url = `${this.searchedStrainEndpoint}&page=${pageNumber}`;
-    console.warn('url was', url)
     this.currentPageNumber = pageNumber;
     (this.savedSearchResults[pageNumber])
         ? this.searchResults = this.savedSearchResults[pageNumber]
         : this.cannabisService.get(url)
             .subscribe(
-              data => {console.warn('data was', data); this.setSearchResults(data, pageNumber)},
+              data => this.setSearchResults(data, pageNumber),
               error => console.log(error)
             );
 

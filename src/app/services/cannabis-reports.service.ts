@@ -7,24 +7,20 @@ import { Headers } from '@angular/http';
 
 @Injectable()
 export class CannabisReportsService {
-
-  public searchEndpoint = 'https://www.cannabisreports.com/api/v1.0/strains/search/'; //  /strain_name
-  private strainDetailsEndpoint = `https://www.cannabisreports.com/api/v1.0/strains/`; //  /ucpc
-
   constructor(private http: Http) { }
 
   get(url: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/pages/${url}`)
+    return this.http.get(`https://strainscout.herokuapp.com/api/pages/${url}`)
       .map(res => res.json())
   }
 
   searchStrains(query: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/search/${query}`)
+    return this.http.get(`https://strainscout.herokuapp.com/api/search/${query}`)
       .map(res => res.json());
   }
 
   getRawStrainInfo(ucpc: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/details/${ucpc}`)
+    return this.http.get(`https://strainscout.herokuapp.com/api/details/${ucpc}`)
       .map(res => res.json().data);
   }
 
@@ -54,7 +50,7 @@ export class CannabisReportsService {
   }
 
   getStrainEffects(ucpc: string): Observable<any> {
-    const url = `http://localhost:3000/api/effectsFlavors/${ucpc}`;
+    const url = `https://strainscout.herokuapp.com/api/effectsFlavors/${ucpc}`;
     return this.http.get(url)
       .map((res: any): any => res.json().data)
       .map((effs: any): any => {
